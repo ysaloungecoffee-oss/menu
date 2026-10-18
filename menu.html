@@ -64,7 +64,8 @@
 <body>
 <script>
   /* ====== AYARLAR ====== */
-  const csvUrl = 'https://www.dropbox.com/scl/fi/ab7f5h0yrt1zc4tikm563/qr_menu.csv?rlkey=04f8ytyv6ftu0d5bnujyxmrva&st=2wfxmbcd&dl=1';
+  /* Güncel CSV Bağlantısı */
+  const csvUrl = 'https://dl.dropboxusercontent.com/scl/fi/ab7f5h0yrt1zc4tikm563/qr_menu.csv?rlkey=04f8ytyv6ftu0d5bnujyxmrva&st=tqw5x9ff&dl=1';
   const cafeName = 'YSA LOUNGE COFFEE';
 </script>
 
@@ -112,7 +113,7 @@
   function parsePrice(v) {
     const n = parseFloat(String(v ?? '').replace(/[^\d.,-]/g, '').replace(/\.(?=\d{3}\b)/g, '').replace(',', '.'));
     return isNaN(n) ? null : n;
-  } 
+  }
   function safeImg(src) {
     const s = String(src || '').trim();
     return /^data:image\/(png|jpeg|gif|webp|x-icon);base64,[A-Za-z0-9+/=]+$/.test(s) ? s : '';
