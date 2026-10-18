@@ -23,12 +23,17 @@
   .ib{position:absolute; right:16px; width:40px;height:40px;border-radius:50%;border:1px solid var(--border);background:var(--s1);color:var(--t);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:17px;padding:0;flex:none}
   .ib:hover{background:var(--s2)}
   
-  /* KATEGORİLER (PILLS) - Scroll kaldırıldı, alt alta wrap özelliği eklendi */
-  .pills{display:flex;flex-wrap:wrap;justify-content:center;gap:8px;padding:0 16px 12px;max-width:760px;margin:auto}
-  .pill{flex:0 0 auto;white-space:nowrap;background:var(--s1);color:var(--t);border:1px solid var(--s2);border-radius:20px;padding:6px 16px;min-height:36px;font-weight:500;font-size:14px;cursor:pointer}
-  .pill:hover{background:var(--s2)}
-  .pill.on{background:var(--primary);border-color:var(--primary);color:#fff}
+  /* YATAY SCROLL VE YÖN OKLARI */
+  .pills-wrapper { display: flex; align-items: center; gap: 6px; max-width: 760px; margin: auto; padding: 0 10px 12px; }
+  .pills { display: flex; gap: 8px; overflow-x: auto; scrollbar-width: none; scroll-behavior: smooth; flex: 1; padding: 2px 2px; }
+  .pills::-webkit-scrollbar { display: none; }
+  .pill { flex: 0 0 auto; white-space: nowrap; background: var(--s1); color: var(--t); border: 1px solid var(--s2); border-radius: 20px; padding: 6px 16px; min-height: 36px; font-weight: 500; font-size: 14px; cursor: pointer; }
+  .pill:hover { background: var(--s2); }
+  .pill.on { background: var(--primary); border-color: var(--primary); color: #fff; }
   
+  .scroll-btn { width: 32px; height: 32px; border-radius: 50%; border: 1px solid var(--border); background: var(--s1); color: var(--t); display: flex; align-items: center; justify-content: center; cursor: pointer; flex: none; font-size: 14px; box-shadow: var(--shadow-sm); }
+  .scroll-btn:hover { background: var(--s2); }
+
   main{max-width:760px;margin:auto;padding:20px 16px calc(40px + env(safe-area-inset-bottom,0px))}
   .sec{scroll-margin-top:150px;margin-bottom:28px}
   .sec h2{display:flex;align-items:center;gap:10px;font-size:13px;font-weight:600;color:var(--text-muted);text-transform:uppercase;letter-spacing:.06em;margin:0 0 10px 4px}
@@ -75,7 +80,14 @@
     <img class="brand-logo" src="https://dl.dropboxusercontent.com/scl/fi/u2vmug06489y3u5poln50/logo.png?rlkey=r115p7daccnv1jknuh22gd6nc&st=9vyaalmj&dl=1" alt="YSA Lounge Coffee">
     <button class="ib" id="thb" aria-label="Tema" onclick="toggleTheme()">☀️</button>
   </div>
-  <nav class="pills hide" id="pl"></nav>
+  
+  <!-- SAĞ / SOL OKLU KATEGORİ MENÜSÜ -->
+  <div class="pills-wrapper hide" id="pl-wrap">
+    <button class="scroll-btn" onclick="document.getElementById('pl').scrollBy({left:-150, behavior:'smooth'})">❮</button>
+    <nav class="pills" id="pl"></nav>
+    <button class="scroll-btn" onclick="document.getElementById('pl').scrollBy({left:150, behavior:'smooth'})">❯</button>
+  </div>
+
 </header>
 
 <main id="app"></main>
@@ -103,10 +115,10 @@
   function loadingUI() {
     const rows = n => Array.from({length:n}, () => '<div class="sk-row"><div class="sk img"></div><div class="sk l"></div><div class="sk r"></div></div>').join('');
     $('#app').innerHTML = [3,2].map(n => `<div class="sec"><div class="sk t"></div><div class="card">${rows(n)}</div></div>`).join('');
-    $('#pl').classList.add('hide');
+    $('#pl-wrap').classList.add('hide');
   }
   function errorUI(msg) {
-    $('#pl').classList.add('hide');
+    $('#pl-wrap').classList.add('hide');
     $('#app').innerHTML = `<div class="state"><div class="ico">!</div><h3>Menü yüklenemedi</h3><p>${E(msg || 'Lütfen bağlantınızı kontrol edip tekrar deneyin.')}</p><button onclick="init()">Tekrar Dene</button></div>`;
   }
 
@@ -138,7 +150,7 @@
       })).filter(r => r.name && r.price !== null);
       if (!rows.length) throw new Error('Menüde gösterilecek ürün bulunamadı.');
       DATA = rows; active = '';
-      $('#pl').classList.remove('hide');
+      $('#pl-wrap').classList.remove('hide');
       render();
     } catch (e) {
       errorUI(e && e.message);
