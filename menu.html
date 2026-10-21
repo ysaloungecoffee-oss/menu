@@ -7,37 +7,39 @@
 <title>YSA LOUNGE COFFEE</title>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
 <style>
-  :root{--bg:#08080a;--c:#141416;--t:#f4f4f5;--text-muted:#9ca3af;--primary:#3b82f6;--primary-hover:#2563eb;--danger:#ef4444;--success:#10b981;--warning:#f59e0b;--border:#2a2a2f;--header-bg:#101012;--s0:#18181b;--s1:#1f1f23;--s2:#2c2c32;--shadow-sm:0 1px 2px 0 rgba(0,0,0,.5);--shadow:0 4px 8px -1px rgba(0,0,0,.6);--radius:12px;--font:system-ui,-apple-system,'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif;color-scheme:dark}
-  [data-theme="light"]{--bg:#f1f5f9;--c:#ffffff;--t:#0f172a;--text-muted:#64748b;--border:#e2e8f0;--header-bg:#ffffff;--s0:#f8fafc;--s1:#f1f5f9;--s2:#e2e8f0;--shadow-sm:0 1px 2px rgba(15,23,42,.08);--shadow:0 4px 8px -1px rgba(15,23,42,.12);color-scheme:light}
+  :root{--bg:#08080a;--c:#141416;--t:#f4f4f5;--text-muted:#9ca3af;--primary:#3b82f6;--primary-hover:#2563eb;--danger:#ef4444;--border:#2a2a2f;--s0:#18181b;--s1:#1f1f23;--s2:#2c2c32;--shadow-sm:0 1px 2px 0 rgba(0,0,0,.5);--shadow:0 4px 8px -1px rgba(0,0,0,.6);--radius:14px;--font:system-ui,-apple-system,'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif;color-scheme:dark}
+  [data-theme="light"]{--bg:#f1f5f9;--c:#ffffff;--t:#0f172a;--text-muted:#64748b;--border:#e2e8f0;--s0:#f8fafc;--s1:#f1f5f9;--s2:#e2e8f0;--shadow-sm:0 1px 2px rgba(15,23,42,.08);--shadow:0 4px 8px -1px rgba(15,23,42,.12);color-scheme:light}
   *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
   html{scroll-behavior:smooth}
   body{margin:0;font-family:var(--font);background:var(--bg);color:var(--t);line-height:1.5;-webkit-font-smoothing:antialiased;overflow-x:hidden}
   button{font-family:inherit;font-size:15px;outline:none;transition:all .2s}
-  
+
   header{position:sticky;top:0;z-index:20;background:#08080a;border-bottom:1px solid var(--border);box-shadow:var(--shadow-sm);padding-top:env(safe-area-inset-top,0)}
-  .top{display:flex;align-items:center;justify-content:center;gap:10px;padding:12px 16px;max-width:760px;margin:auto;position:relative;min-height:80px;}
-  
-  /* LOGO BOYUTU */
-  .brand-logo { height: 85px; max-width: 70vw; object-fit: contain; }
-  
-  .ib{position:absolute; right:16px; width:40px;height:40px;border-radius:50%;border:1px solid var(--border);background:var(--s1);color:var(--t);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:17px;padding:0;flex:none}
+  .top{display:flex;align-items:center;justify-content:center;gap:10px;padding:12px 16px;max-width:760px;margin:auto;position:relative;min-height:80px}
+  .brand-logo{height:85px;max-width:70vw;object-fit:contain}
+  .ib{position:absolute;right:16px;width:40px;height:40px;border-radius:50%;border:1px solid var(--border);background:var(--s1);color:var(--t);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:17px;padding:0;flex:none}
   .ib:hover{background:var(--s2)}
-  
-  /* YATAY SCROLL VE YÖN OKLARI */
-  .pills-wrapper { display: flex; align-items: center; gap: 6px; max-width: 760px; margin: auto; padding: 0 10px 12px; }
-  .pills { display: flex; gap: 8px; overflow-x: auto; scrollbar-width: none; scroll-behavior: smooth; flex: 1; padding: 2px 2px; }
-  .pills::-webkit-scrollbar { display: none; }
-  .pill { flex: 0 0 auto; white-space: nowrap; background: var(--s1); color: var(--t); border: 1px solid var(--s2); border-radius: 20px; padding: 6px 16px; min-height: 36px; font-weight: 500; font-size: 14px; cursor: pointer; }
-  .pill:hover { background: var(--s2); }
-  .pill.on { background: var(--primary); border-color: var(--primary); color: #fff; }
-  
-  .scroll-btn { width: 32px; height: 32px; border-radius: 50%; border: 1px solid var(--border); background: var(--s1); color: var(--t); display: flex; align-items: center; justify-content: center; cursor: pointer; flex: none; font-size: 14px; box-shadow: var(--shadow-sm); }
-  .scroll-btn:hover { background: var(--s2); }
+  .hb{left:16px;right:auto;font-size:20px}
+  .hidden{display:none!important}
 
   main{max-width:760px;margin:auto;padding:20px 16px calc(40px + env(safe-area-inset-bottom,0px))}
-  .sec{scroll-margin-top:150px;margin-bottom:28px}
-  .sec h2{display:flex;align-items:center;gap:10px;font-size:13px;font-weight:600;color:var(--text-muted);text-transform:uppercase;letter-spacing:.06em;margin:0 0 10px 4px}
-  .sec h2 .badge{background:var(--s1);color:var(--text-muted);border-radius:20px;padding:2px 10px;font-size:12px;letter-spacing:0;text-transform:none}
+
+  /* KATEGORİ KARELERİ */
+  .grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+  @media(min-width:520px){.grid{grid-template-columns:repeat(3,1fr);gap:14px}}
+  .tile{position:relative;aspect-ratio:1/1;border:0;padding:0;border-radius:var(--radius);overflow:hidden;cursor:pointer;color:#fff;text-align:left;box-shadow:var(--shadow);background:var(--s1)}
+  .tile:active{transform:scale(.97)}
+  .tile:hover{filter:brightness(1.08)}
+  .tile .bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+  .tile .emo{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:clamp(44px,14vw,72px);opacity:.9;padding-bottom:18%}
+  .tile .shade{position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,.82) 0%,rgba(0,0,0,.25) 55%,rgba(0,0,0,.05) 100%)}
+  .tile .lbl{position:absolute;left:0;right:0;bottom:0;padding:12px;font-weight:700;font-size:clamp(13px,3.6vw,16px);line-height:1.25;text-transform:uppercase;letter-spacing:.04em;word-break:break-word;text-shadow:0 1px 4px rgba(0,0,0,.6)}
+  .tile .cnt{position:absolute;top:8px;right:8px;background:rgba(0,0,0,.55);backdrop-filter:blur(4px);color:#fff;border-radius:20px;padding:2px 9px;font-size:12px;font-weight:600}
+
+  /* ÜRÜN LİSTESİ */
+  .bar{display:flex;align-items:center;gap:12px;margin-bottom:14px}
+  .bar h2{margin:0;font-size:16px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;word-break:break-word}
+
   .card{background:var(--c);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow-sm);overflow:hidden}
   .item{display:flex;align-items:center;gap:14px;padding:14px 18px;border-bottom:1px solid var(--border);transition:background .2s}
   .item:last-child{border-bottom:none}
@@ -49,22 +51,16 @@
   .name{font-weight:600;font-size:15px;line-height:1.3;word-break:break-word}
   .out-tag{display:inline-block;margin-top:4px;font-size:12px;color:var(--danger);font-weight:600}
   .price{font-weight:700;font-size:15px;color:var(--primary);white-space:nowrap;background:rgba(59,130,246,.12);padding:5px 12px;border-radius:20px}
+
   .state{text-align:center;padding:60px 20px;color:var(--text-muted)}
   .state h3{margin:16px 0 6px;color:var(--t);font-weight:600}
   .state p{margin:0 0 20px;font-size:14px}
   .state button{background:var(--primary);color:#fff;border:0;border-radius:8px;padding:10px 22px;min-height:44px;font-weight:500;cursor:pointer}
   .state button:hover{background:var(--primary-hover)}
   .ico{width:64px;height:64px;border-radius:50%;background:rgba(239,68,68,.15);color:var(--danger);display:inline-flex;align-items:center;justify-content:center;font-size:28px;font-weight:700}
-  .sk{height:18px;border-radius:6px;background:linear-gradient(90deg,var(--s1) 25%,var(--s2) 37%,var(--s1) 63%);background-size:400% 100%;animation:sh 1.4s ease infinite}
-  .sk.t{width:120px;margin:0 0 12px 4px;height:14px}
-  .sk-row{display:flex;align-items:center;gap:14px;padding:18px;border-bottom:1px solid var(--border)}
-  .sk-row:last-child{border-bottom:none}
-  .sk-row .sk.img{width:64px;height:64px;border-radius:10px;flex:none}
-  .sk-row .sk.l{flex:1}
-  .sk-row .sk.r{width:64px}
+  .sk{border-radius:var(--radius);aspect-ratio:1/1;background:linear-gradient(90deg,var(--s1) 25%,var(--s2) 37%,var(--s1) 63%);background-size:400% 100%;animation:sh 1.4s ease infinite}
   @keyframes sh{0%{background-position:100% 50%}100%{background-position:0 50%}}
   footer{text-align:center;color:var(--text-muted);font-size:12px;padding:0 16px 30px}
-  .hide{display:none!important}
 </style>
 </head>
 <body>
@@ -76,17 +72,10 @@
 
 <header>
   <div class="top">
-    <!-- Güncel Logo Linki -->
-  <img class="brand-logo" src="https://dl.dropboxusercontent.com/scl/fi/7z5d1grg4mass50aa0ubg/ysa.png?rlkey=p4fn8rakng4xldpsz039ypfs3&st=bwyoshtn&dl=1" alt="YSA Lounge Coffee">    <button class="ib" id="thb" aria-label="Tema" onclick="toggleTheme()">☀️</button>
+    <button class="ib hb hidden" id="hb" aria-label="Geri" onclick="goBack()">←</button>
+    <img class="brand-logo" src="https://dl.dropboxusercontent.com/scl/fi/7z5d1grg4mass50aa0ubg/ysa.png?rlkey=p4fn8rakng4xldpsz039ypfs3&st=bwyoshtn&dl=1" alt="YSA Lounge Coffee">
+    <button class="ib" id="thb" aria-label="Tema" onclick="toggleTheme()">☀️</button>
   </div>
-  
-  <!-- SAĞ / SOL OKLU KATEGORİ MENÜSÜ -->
-  <div class="pills-wrapper hide" id="pl-wrap">
-    <button class="scroll-btn" onclick="document.getElementById('pl').scrollBy({left:-150, behavior:'smooth'})">❮</button>
-    <nav class="pills" id="pl"></nav>
-    <button class="scroll-btn" onclick="document.getElementById('pl').scrollBy({left:150, behavior:'smooth'})">❯</button>
-  </div>
-
 </header>
 
 <main id="app"></main>
@@ -106,18 +95,14 @@
   function toggleTheme() { applyTheme(document.documentElement.dataset.theme === 'light' ? 'dark' : 'light'); }
   let saved = 'dark'; try { saved = localStorage.getItem('theme') || 'dark'; } catch (e) {}
   applyTheme(saved);
-  
   document.title = cafeName;
 
-  let DATA = [], active = '';
+  let DATA = [];
 
   function loadingUI() {
-    const rows = n => Array.from({length:n}, () => '<div class="sk-row"><div class="sk img"></div><div class="sk l"></div><div class="sk r"></div></div>').join('');
-    $('#app').innerHTML = [3,2].map(n => `<div class="sec"><div class="sk t"></div><div class="card">${rows(n)}</div></div>`).join('');
-    $('#pl-wrap').classList.add('hide');
+    $('#app').innerHTML = `<div class="grid">${Array.from({length:6}, () => '<div class="sk"></div>').join('')}</div>`;
   }
   function errorUI(msg) {
-    $('#pl-wrap').classList.add('hide');
     $('#app').innerHTML = `<div class="state"><div class="ico">!</div><h3>Menü yüklenemedi</h3><p>${E(msg || 'Lütfen bağlantınızı kontrol edip tekrar deneyin.')}</p><button onclick="init()">Tekrar Dene</button></div>`;
   }
 
@@ -128,6 +113,31 @@
   function safeImg(src) {
     const s = String(src || '').trim();
     return /^data:image\/(png|jpeg|gif|webp|x-icon);base64,[A-Za-z0-9+/=]+$/.test(s) ? s : '';
+  }
+
+  /* Kategori adına göre emoji ve renk (görsel yoksa) */
+  function catEmoji(name) {
+    const n = name.toLocaleLowerCase('tr');
+    const map = [
+      [/kahve|coffee|espresso|latte|americano|mocha|cappuc/, '☕'],
+      [/çay|cay|tea|bitki/, '🍵'],
+      [/soğuk|soguk|ice|frappe|buz|limonata/, '🧊'],
+      [/milkshake|shake|smoothie/, '🥤'],
+      [/tatlı|tatli|pasta|cake|waffle|cheesecake|dondurma/, '🍰'],
+      [/tost|sandviç|sandvic|burger|atıştırma|atistirma/, '🥪'],
+      [/kahvaltı|kahvalti/, '🍳'],
+      [/salata/, '🥗'],
+      [/pizza/, '🍕'],
+      [/makarna/, '🍝'],
+      [/nargile/, '💨'],
+      [/içecek|icecek|meşrubat|mesrubat|su|gazoz|kola/, '🥤']
+    ];
+    for (const [re, e] of map) if (re.test(n)) return e;
+    return '🍽';
+  }
+  function catGradient(name) {
+    let h = 0; for (const ch of name) h = (h * 31 + ch.charCodeAt(0)) % 360;
+    return `linear-gradient(135deg,hsl(${h},55%,32%),hsl(${(h + 40) % 360},60%,18%))`;
   }
 
   async function init() {
@@ -148,9 +158,8 @@
         img: safeImg(r['Görsel'])
       })).filter(r => r.name && r.price !== null);
       if (!rows.length) throw new Error('Menüde gösterilecek ürün bulunamadı.');
-      DATA = rows; active = '';
-      $('#pl-wrap').classList.remove('hide');
-      render();
+      DATA = rows;
+      show();
     } catch (e) {
       errorUI(e && e.message);
     }
@@ -165,48 +174,47 @@
     return map;
   }
 
-  function render() {
+  /* Ana ekran: kategori kareleri */
+  function renderHome() {
     const g = groups(), cats = [...g.keys()];
-    if (!active || !cats.includes(active)) active = cats[0] || '';
-    $('#pl').innerHTML = cats.map((c, i) => `<button class="pill${c === active ? ' on' : ''}" data-i="${i}">${E(c)}</button>`).join('');
-    $('#pl').querySelectorAll('.pill').forEach(b => b.onclick = () => {
-      const el = document.getElementById('c' + b.dataset.i);
-      active = cats[b.dataset.i]; if (el) el.scrollIntoView({ behavior:'smooth' }); render();
-    });
-    $('#app').innerHTML = cats.map((c, i) => `
-      <section class="sec" id="c${i}">
-        <h2>${E(c)} <span class="badge">${g.get(c).length}</span></h2>
-        <div class="card">${g.get(c).map(p => `
-          <div class="item${p.out ? ' out' : ''}">
-            ${p.img ? `<img class="pic" loading="lazy" src="${p.img}" alt="">` : `<div class="pic ph">🍽</div>`}
-            <div class="info">
-              <div class="name">${E(p.name)}</div>${p.out ? '<div class="out-tag">Tükendi</div>' : ''}
-            </div>
-            <div class="price">${fmt(p.price)}</div>
-          </div>`).join('')}
-        </div>
-      </section>`).join('') ||
-      `<div class="state"><div class="ico" style="background:var(--s1);color:var(--text-muted)">🍽</div><h3>Menü boş</h3><p>Henüz gösterilecek ürün yok.</p></div>`;
+    $('#app').innerHTML = `<div class="grid">${cats.map((c, i) => {
+      const items = g.get(c);
+      const withImg = items.find(p => p.img);
+      const bg = withImg
+        ? `<img class="bg" loading="lazy" src="${withImg.img}" alt="">`
+        : `<div class="bg" style="background:${catGradient(c)}"></div><div class="emo">${catEmoji(c)}</div>`;
+      return `<button class="tile" data-i="${i}">${bg}<div class="shade"></div><span class="cnt">${items.length}</span><div class="lbl">${E(c)}</div></button>`;
+    }).join('')}</div>`;
+    $('#app').querySelectorAll('.tile').forEach(b => b.onclick = () => { location.hash = 'c' + b.dataset.i; });
   }
 
-  let ticking = false;
-  window.addEventListener('scroll', () => {
-    if (ticking) return; ticking = true;
-    requestAnimationFrame(() => {
-      ticking = false;
-      const secs = [...document.querySelectorAll('.sec')]; if (!secs.length) return;
-      let cur = secs[0];
-      secs.forEach(s => { if (s.getBoundingClientRect().top <= 170) cur = s; });
-      const name = cur.querySelector('h2').firstChild.textContent.trim();
-      if (name !== active) {
-        active = name;
-        document.querySelectorAll('.pill').forEach(p => {
-          const on = p.textContent === name; p.classList.toggle('on', on);
-          if (on) p.scrollIntoView({ inline:'center', block:'nearest', behavior:'smooth' });
-        });
-      }
-    });
-  }, { passive:true });
+  /* Kategori ekranı: ürün listesi */
+  function renderCat(i) {
+    const g = groups(), cats = [...g.keys()], c = cats[i];
+    if (c === undefined) { location.hash = ''; return; }
+    $('#app').innerHTML = `
+      <div class="bar"><h2>${E(c)}</h2></div>
+      <div class="card">${g.get(c).map(p => `
+        <div class="item${p.out ? ' out' : ''}">
+          ${p.img ? `<img class="pic" loading="lazy" src="${p.img}" alt="">` : `<div class="pic ph">🍽</div>`}
+          <div class="info">
+            <div class="name">${E(p.name)}</div>${p.out ? '<div class="out-tag">Tükendi</div>' : ''}
+          </div>
+          <div class="price">${fmt(p.price)}</div>
+        </div>`).join('')}
+      </div>`;
+  }
+
+  function goBack() { if (history.length > 1) history.back(); else location.hash = ''; }
+
+  function show() {
+    if (!DATA.length) return;
+    const m = location.hash.match(/^#c(\d+)$/);
+    if (m) renderCat(+m[1]); else renderHome();
+    $('#hb').classList.toggle('hidden', !m);
+    window.scrollTo({ top: 0, behavior: 'instant' });
+  }
+  window.addEventListener('hashchange', show);
 
   init();
 </script>
