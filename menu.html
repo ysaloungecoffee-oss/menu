@@ -49,6 +49,7 @@
   .pic.ph{display:flex;align-items:center;justify-content:center;color:var(--text-muted);font-size:22px}
   .info{flex:1;min-width:0}
   .name{font-weight:600;font-size:15px;line-height:1.3;word-break:break-word}
+  .opts{font-size:12px;color:var(--text-muted);margin-top:3px;line-height:1.35;word-break:break-word}
   .out-tag{display:inline-block;margin-top:4px;font-size:12px;color:var(--danger);font-weight:600}
   .price{font-weight:700;font-size:15px;color:var(--primary);white-space:nowrap;background:rgba(59,130,246,.12);padding:5px 12px;border-radius:20px}
 
@@ -114,6 +115,10 @@
     const s = String(src || '').trim();
     return /^data:image\/(png|jpeg|gif|webp|x-icon);base64,[A-Za-z0-9+/=]+$/.test(s) ? s : '';
   }
+  /* Sunucu, formül enjeksiyonunu önlemek için =,+,-,@ ile başlayan metnin başına ' ekler; burada geri alınır */
+  function clean(v) {
+    return String(v ?? '').trim().replace(/^'(?=[=+\-@])/, '');
+  }
 
   /* Kategori adına göre emoji ve renk (görsel yoksa) */
   function catEmoji(name) {
@@ -147,15 +152,16 @@
       if (!res.ok) throw new Error('Sunucu yanıt vermedi (' + res.status + ')');
       const text = await res.text();
       const out = Papa.parse(text, {
-        header: true, skipEmptyLines: true, delimiter: '',
+        header: true, skipEmptyLines: true, delimiter: ';',
         transformHeader: h => h.trim().replace(/^\uFEFF/, '')
       });
       const rows = (out.data || []).map(r => ({
-        cat: String(r['Kategori'] || '').trim() || 'Diğer',
-        name: String(r['Ürün'] || '').trim(),
+        cat: clean(r['Kategori']) || 'Diğer',
+        name: clean(r['Ürün']),
         price: parsePrice(r['Fiyat']),
         out: /tükendi/i.test(String(r['Durum'] || '')),
-        img: safeImg(r['Görsel'])
+        img: safeImg(r['Görsel']),
+        opts: clean(r['Seçenekler'])
       })).filter(r => r.name && r.price !== null);
       if (!rows.length) throw new Error('Menüde gösterilecek ürün bulunamadı.');
       DATA = rows;
@@ -198,7 +204,9 @@
         <div class="item${p.out ? ' out' : ''}">
           ${p.img ? `<img class="pic" loading="lazy" src="${p.img}" alt="">` : `<div class="pic ph">🍽</div>`}
           <div class="info">
-            <div class="name">${E(p.name)}</div>${p.out ? '<div class="out-tag">Tükendi</div>' : ''}
+            <div class="name">${E(p.name)}</div>
+            ${p.opts ? `<div class="opts">${E(p.opts)}</div>` : ''}
+            ${p.out ? '<div class="out-tag">Tükendi</div>' : ''}
           </div>
           <div class="price">${fmt(p.price)}</div>
         </div>`).join('')}
